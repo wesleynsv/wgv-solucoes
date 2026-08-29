@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Access Checker da WGV Soluções: visão computacional para captura facial, leitura de documentos e automação do controle de acesso.">
+  <title>Access Checker | WGV Soluções</title>
+  <style>
+    :root{
+      --navy:#0B172A; --blue:#1769E0; --blue-dark:#0E55BD; --blue-soft:#EAF2FF;
+      --text:#1F2937; --muted:#64748B; --bg:#F6F8FB; --white:#FFFFFF;
+      --border:#E2E8F0; --green:#25D366; --shadow:0 18px 50px rgba(15,23,42,.10);
+      --radius:20px; --max:1180px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:var(--white);line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--blue)}
+    h1,h2,h3{color:var(--navy);line-height:1.12;letter-spacing:-.03em}
+    h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800}
+    h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:800}
+    h3{font-size:1.25rem}
+    .section{padding:100px 0}
+    .section-head{max-width:720px;margin-bottom:50px}
+    .section-head h2{margin-top:14px}.section-head p{margin-top:18px;color:var(--muted);font-size:1.08rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;font-weight:800;border:1px solid transparent;transition:.2s ease;cursor:pointer}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:0 10px 25px rgba(23,105,224,.22)}
+    .btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px)}
+    .btn-secondary{background:#fff;border-color:var(--border);color:var(--navy)}
+    .btn-secondary:hover{border-color:#B8C7DC}.btn-whatsapp{background:var(--green);color:#052E16}
+
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(226,232,240,.8)}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .logo{font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1}.logo span{display:block;font-size:.68rem;letter-spacing:.14em;margin-top:5px;color:var(--muted)}
+    .nav-links{display:flex;align-items:center;gap:28px;font-size:.92rem;font-weight:700;color:#475569}.nav-links a:hover{color:var(--blue)}
+    .mobile-menu{display:none;border:0;background:transparent;font-size:1.6rem;color:var(--navy)}
+
+    .hero{background:linear-gradient(180deg,#fff 0%,#F8FBFF 100%);padding:88px 0 90px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:65px}
+    .hero-copy h1{margin-top:16px}.hero-copy h1 strong{color:var(--blue);font-weight:800}
+    .hero-copy p{max-width:640px;margin:24px 0 30px;color:var(--muted);font-size:1.15rem}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}.hero-note{margin-top:20px;font-size:.87rem;color:#64748B}
+
+    .dashboard-wrap{position:relative}.glow{position:absolute;width:360px;height:360px;border-radius:50%;background:#DCEAFF;filter:blur(45px);right:0;top:20px;z-index:0}
+    .dashboard{position:relative;z-index:1;background:#fff;border:1px solid #DCE5F0;border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+    .dash-top{height:54px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 18px}.dash-brand{font-size:.8rem;font-weight:900;letter-spacing:.04em;color:var(--navy)}
+    .dots{display:flex;gap:6px}.dots i{width:8px;height:8px;border-radius:50%;background:#CBD5E1}
+    .dash-body{padding:22px}.dash-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .face-box{background:#F1F5F9;border-radius:16px;min-height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .face-frame{width:150px;height:190px;border:3px solid var(--blue);border-radius:44% 44% 42% 42%;position:relative;box-shadow:0 0 0 999px rgba(23,105,224,.03)}
+    .face-frame::before,.face-frame::after{content:"";position:absolute;top:76px;width:13px;height:13px;border-radius:50%;background:var(--navy)}
+    .face-frame::before{left:39px}.face-frame::after{right:39px}.face-line{position:absolute;width:100%;height:2px;background:var(--blue);top:93px;left:0;opacity:.55}
+    .face-label{position:absolute;bottom:14px;left:14px;background:#fff;border-radius:8px;padding:6px 9px;font-size:.72rem;font-weight:800;color:var(--blue);box-shadow:0 5px 15px rgba(15,23,42,.08)}
+    .info-panel{display:flex;flex-direction:column;gap:10px}.info-card{border:1px solid var(--border);border-radius:13px;padding:13px}.info-card small{display:block;color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.info-card b{display:block;margin-top:3px;color:var(--navy);font-size:.9rem}
+    .status{margin-top:auto;background:#ECFDF5;border:1px solid #BBF7D0;color:#166534;border-radius:13px;padding:13px;font-weight:800;font-size:.82rem}
+
+    .problem{background:var(--bg)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:22px}.compare-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:30px}.compare-card.after{border:2px solid #CFE0FF}
+    .compare-title{display:flex;align-items:center;gap:10px;font-weight:900;margin-bottom:24px}.compare-title .num{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue)}
+    .steps{display:grid;gap:12px}.step{display:flex;align-items:center;gap:13px;padding:13px 14px;background:#F8FAFC;border-radius:12px;font-weight:700;font-size:.93rem}.step .icon{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:#E2E8F0}.after .step .icon{background:var(--blue-soft);color:var(--blue)}
+    .statement{text-align:center;margin-top:38px;font-size:1.3rem;font-weight:800;color:var(--navy)}
+
+    .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.how-card{padding:28px 24px;border:1px solid var(--border);border-radius:var(--radius);background:#fff}.how-number{font-size:.78rem;font-weight:900;color:var(--blue);letter-spacing:.1em}.how-icon{width:52px;height:52px;border-radius:15px;background:var(--blue-soft);display:grid;place-items:center;font-size:1.35rem;margin:18px 0}.how-card p{margin-top:10px;color:var(--muted);font-size:.94rem}
+
+    .applications{background:var(--bg)}.app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.app-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:30px;min-height:230px}.app-card.featured{grid-column:span 2}.app-icon{width:52px;height:52px;border-radius:15px;background:var(--blue-soft);display:grid;place-items:center;font-size:1.35rem;margin-bottom:20px}.app-card p{margin-top:10px;color:var(--muted)}.app-card ul{margin:15px 0 0 18px;color:var(--muted)}
+
+    .tech-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}.tech-copy p{margin-top:18px;color:var(--muted);font-size:1.05rem}.quote{margin-top:28px;padding:20px 22px;border-left:4px solid var(--blue);background:#F8FAFC;border-radius:0 14px 14px 0;font-weight:800;color:var(--navy)}
+    .pipeline{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:10px}.pipeline-box{min-height:120px;padding:20px 12px;border:1px solid var(--border);border-radius:17px;background:#fff;display:grid;place-items:center;text-align:center;font-weight:900;color:var(--navy);box-shadow:0 8px 24px rgba(15,23,42,.05)}.pipeline-box small{display:block;margin-top:5px;color:var(--muted);font-weight:600}.arrow{color:var(--blue);font-size:1.4rem;font-weight:900}
+
+    .audience{background:var(--navy)}.audience h2,.audience .section-head p{color:#fff}.audience .section-head p{opacity:.72}.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.aud-card{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:var(--radius);padding:30px;color:#fff}.aud-card .icon{font-size:1.7rem;margin-bottom:16px}.aud-card h3{color:#fff}.aud-card p{color:#CBD5E1;margin-top:9px}
+
+    .benefits-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.benefit{text-align:center;padding:24px 12px}.benefit-icon{font-size:1.6rem;margin-bottom:13px}.benefit h3{font-size:1rem;letter-spacing:-.01em}.benefit p{font-size:.84rem;color:var(--muted);margin-top:7px}
+
+    .cta{padding:95px 0;background:linear-gradient(135deg,#EEF5FF,#fff)}.cta-box{background:#fff;border:1px solid #D7E4F5;border-radius:28px;padding:58px;box-shadow:var(--shadow);text-align:center}.cta-box p{max-width:650px;margin:17px auto 26px;color:var(--muted);font-size:1.06rem}
+
+    .contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}.contact-copy p{color:var(--muted);margin-top:17px}.contact-info{margin-top:28px;display:grid;gap:13px}.contact-info a{display:flex;gap:12px;align-items:center;font-weight:750;color:var(--navy)}.contact-info span{width:38px;height:38px;border-radius:10px;background:var(--blue-soft);display:grid;place-items:center}
+    form{background:#fff;border:1px solid var(--border);border-radius:22px;padding:30px;box-shadow:0 12px 35px rgba(15,23,42,.06)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}label{font-size:.84rem;font-weight:800;color:var(--navy)}input,textarea{width:100%;padding:13px 14px;border:1px solid #CBD5E1;border-radius:10px;font:inherit;color:var(--text);outline:none;background:#fff}input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(23,105,224,.1)}textarea{min-height:130px;resize:vertical}.form-note{font-size:.76rem;color:var(--muted);margin-top:12px}form .btn{width:100%;margin-top:18px}
+
+    footer{background:#07111F;color:#CBD5E1;padding:38px 0}.footer-inner{display:flex;justify-content:space-between;gap:30px;align-items:center}footer .logo{color:#fff}.footer-text{font-size:.84rem}.privacy{font-size:.72rem;color:#94A3B8;margin-top:18px;max-width:780px}
+    .whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:60;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#06351A;box-shadow:0 12px 30px rgba(37,211,102,.32);font-size:1.45rem;font-weight:900}.whatsapp-float:hover{transform:translateY(-2px)}
+
+    @media(max-width:950px){
+      .nav-links{display:none;position:absolute;top:76px;left:0;right:0;background:#fff;padding:20px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)}.mobile-menu{display:block}
+      .hero-grid,.tech-grid,.contact-grid{grid-template-columns:1fr}.hero{padding-top:65px}.dashboard-wrap{max-width:680px;margin:auto}.how-grid{grid-template-columns:1fr 1fr}.app-grid{grid-template-columns:1fr 1fr}.app-card.featured{grid-column:span 2}.benefits-grid{grid-template-columns:repeat(3,1fr)}.pipeline{grid-template-columns:1fr 1fr;gap:14px}.arrow{display:none}
+    }
+    @media(max-width:650px){
+      .container{width:min(var(--max),calc(100% - 28px))}.section{padding:72px 0}.hero{padding:54px 0 65px}.hero-copy p{font-size:1rem}.hero-actions .btn{width:100%}.dash-grid{grid-template-columns:1fr}.face-box{min-height:250px}.compare,.how-grid,.app-grid,.aud-grid,.benefits-grid,.form-grid{grid-template-columns:1fr}.app-card.featured{grid-column:auto}.benefit{padding:10px 30px}.cta-box{padding:38px 22px}.footer-inner{flex-direction:column;align-items:flex-start}.pipeline{grid-template-columns:1fr}.pipeline-box{min-height:95px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="#inicio" class="logo">WGV<span>SOLUÇÕES</span></a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="#produto">Access Checker</a><a href="#como-funciona">Como funciona</a><a href="#aplicacoes">Aplicações</a><a href="#contato">Contato</a>
+      <a class="btn btn-whatsapp" href="https://wa.me/5511947230965?text=Ol%C3%A1!%20Gostaria%20de%20conhecer%20o%20Access%20Checker." target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+    <button class="mobile-menu" aria-label="Abrir menu" onclick="const n=document.querySelector('.nav-links');n.style.display=n.style.display==='flex'?'none':'flex'">☰</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Visão computacional para controle de acesso</span>
+        <h1 id="produto">Access <strong>Checker</strong></h1>
+        <h2 style="font-size:clamp(1.65rem,3vw,2.35rem);margin-top:12px">Mais agilidade para identificar.<br>Mais eficiência para controlar o acesso.</h2>
+        <p>Automatize a captura de imagens faciais, a leitura de documentos e o registro de informações na entrada e saída de pessoas.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#contato">Quero conhecer o Access Checker →</a><a class="btn btn-secondary" href="#como-funciona">Como funciona</a></div>
+        <div class="hero-note">Ideal para empresas, condomínios, indústrias e outras operações.</div>
+      </div>
+      <div class="dashboard-wrap" aria-label="Exemplo visual da interface do Access Checker">
+        <div class="glow"></div><div class="dashboard"><div class="dash-top"><div class="dash-brand">ACCESS CHECKER</div><div class="dots"><i></i><i></i><i></i></div></div><div class="dash-body"><div class="dash-grid"><div class="face-box"><div class="face-frame"><div class="face-line"></div></div><div class="face-label">CAPTURA FACIAL</div></div><div class="info-panel"><div class="info-card"><small>Identificação</small><b>João da Silva</b></div><div class="info-card"><small>Documento</small><b>CNH ••••••••</b></div><div class="info-card"><small>Horário</small><b>08:42:17</b></div><div class="status">✓ Registro concluído</div></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section problem">
+    <div class="container">
+      <div class="section-head"><span class="eyebrow">O problema</span><h2>Seu operador não precisa fazer tudo manualmente.</h2><p>Processos de controle de acesso podem exigir observação, digitação, conferência e registro. O Access Checker automatiza tarefas repetitivas e mantém o operador no controle.</p></div>
+      <div class="compare">
+        <div class="compare-card"><div class="compare-title"><span class="num">01</span> Controle manual</div><div class="steps"><div class="step"><span class="icon">👤</span> Pessoa chega</div><div class="step"><span class="icon">👨‍💼</span> Operador atende</div><div class="step"><span class="icon">🪪</span> Confere documento</div><div class="step"><span class="icon">⌨</span> Digita dados</div><div class="step"><span class="icon">📋</span> Registra informações</div></div></div>
+        <div class="compare-card after"><div class="compare-title"><span class="num">02</span> Com Access Checker</div><div class="steps"><div class="step"><span class="icon">👤</span> Pessoa chega</div><div class="step"><span class="icon">📷</span> Câmera captura</div><div class="step"><span class="icon">🧠</span> Sistema analisa</div><div class="step"><span class="icon">📋</span> Dados registrados</div><div class="step"><span class="icon">✓</span> Operador decide quando necessário</div></div></div>
+      </div>
+      <div class="statement">Automatize as tarefas repetitivas e mantenha o operador no controle.</div>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona">
+    <div class="container"><div class="section-head"><span class="eyebrow">Como funciona</span><h2>Da captura à ação.</h2><p>O Access Checker organiza o processo de visão computacional em etapas simples e adaptáveis à operação.</p></div>
+      <div class="how-grid">
+        <article class="how-card"><div class="how-number">01</div><div class="how-icon">📷</div><h3>Capture</h3><p>A câmera captura a imagem da pessoa ou do documento.</p></article>
+        <article class="how-card"><div class="how-number">02</div><div class="how-icon">🧠</div><h3>Analise</h3><p>O sistema processa a imagem e identifica as informações relevantes.</p></article>
+        <article class="how-card"><div class="how-number">03</div><div class="how-icon">📋</div><h3>Registre</h3><p>Os dados obtidos podem ser organizados e registrados.</p></article>
+        <article class="how-card"><div class="how-number">04</div><div class="how-icon">✓</div><h3>Aja</h3><p>O operador recebe as informações ou o sistema executa a ação definida.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section applications" id="aplicacoes">
+    <div class="container"><div class="section-head"><span class="eyebrow">Aplicações</span><h2>Uma solução. Diversas possibilidades.</h2><p>O Access Checker pode ser configurado de acordo com o processo que você precisa automatizar.</p></div>
+      <div class="app-grid">
+        <article class="app-card"><div class="app-icon">👤</div><h3>Captura e análise facial</h3><p>Capture imagens faciais para identificação, registro e controle, conforme a necessidade da aplicação.</p></article>
+        <article class="app-card"><div class="app-icon">🪪</div><h3>Leitura de documentos</h3><p>Automatize a captura e leitura de informações presentes em documentos.</p><ul><li>CNH</li><li>RG</li><li>Outros documentos de identificação</li></ul></article>
+        <article class="app-card"><div class="app-icon">📋</div><h3>Registro de visitantes</h3><p>Facilite etapas do cadastro e registro de visitantes, colaboradores e prestadores.</p></article>
+        <article class="app-card"><div class="app-icon">🚪</div><h3>Controle de entrada e saída</h3><p>Utilize visão computacional para auxiliar no registro das movimentações de pessoas.</p></article>
+        <article class="app-card featured"><div class="app-icon">⚙️</div><h3>Aplicações sob medida</h3><p>Sua necessidade pode ser diferente. O Access Checker pode ser adaptado para outras aplicações envolvendo captura, análise, identificação e registro de imagens e informações.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tecnologia"><div class="container tech-grid"><div class="tech-copy"><span class="eyebrow">Tecnologia</span><h2>A tecnologia certa para cada aplicação.</h2><p>O equipamento é definido de acordo com a necessidade do projeto. Qualidade de imagem, ambiente, distância, velocidade, integração e investimento são considerados no desenvolvimento da solução.</p><div class="quote">Você não precisa da tecnologia mais cara. Precisa da tecnologia adequada.</div></div><div class="pipeline"><div class="pipeline-box">📷<br>Webcam<small>ou dispositivo adequado</small></div><div class="arrow">→</div><div class="pipeline-box">🧠<br>Processamento<small>+ visão computacional</small></div><div class="arrow">→</div><div class="pipeline-box">✓<br>Access Checker<small>informação estruturada</small></div><div class="arrow">→</div><div class="pipeline-box">⚙️<br>Aplicação<small>ação conforme o processo</small></div></div></div></section>
+
+  <section class="section audience"><div class="container"><div class="section-head"><span class="eyebrow" style="color:#7FB0FF">Onde utilizar</span><h2>Feito para diferentes operações.</h2><p>Comece pelo problema. A solução é dimensionada para o seu processo.</p></div><div class="aud-grid"><article class="aud-card"><div class="icon">🏢</div><h3>Empresas</h3><p>Controle e registro de colaboradores, visitantes e prestadores de serviço.</p></article><article class="aud-card"><div class="icon">🏙</div><h3>Condomínios</h3><p>Agilidade no cadastro e identificação de visitantes e prestadores.</p></article><article class="aud-card"><div class="icon">🏭</div><h3>Indústrias</h3><p>Controle de acesso de funcionários, terceiros e visitantes.</p></article></div></div></section>
+
+  <section class="section"><div class="container"><div class="section-head"><span class="eyebrow">Benefícios</span><h2>Menos tarefas repetitivas. Mais eficiência operacional.</h2></div><div class="benefits-grid"><div class="benefit"><div class="benefit-icon">⏱</div><h3>Mais agilidade</h3><p>Reduza o tempo gasto em tarefas manuais.</p></div><div class="benefit"><div class="benefit-icon">👨‍💼</div><h3>Menos trabalho operacional</h3><p>Automatize etapas repetitivas.</p></div><div class="benefit"><div class="benefit-icon">📋</div><h3>Mais organização</h3><p>Estruture as informações capturadas.</p></div><div class="benefit"><div class="benefit-icon">📷</div><h3>Mais automação</h3><p>Use a imagem como fonte de informação.</p></div><div class="benefit"><div class="benefit-icon">🔧</div><h3>Sob medida</h3><p>Adapte a solução à sua operação.</p></div></div></div></section>
+
+  <section class="cta"><div class="container"><div class="cta-box"><span class="eyebrow">Vamos conversar</span><h2 style="margin-top:14px">Tem um processo que você gostaria de automatizar?</h2><p>Conte-nos como funciona hoje seu controle de acesso e descubra como o Access Checker pode ser aplicado à sua operação.</p><a class="btn btn-primary" href="#contato">Falar com um especialista →</a></div></div></section>
+
+  <section class="section" id="contato"><div class="container contact-grid"><div class="contact-copy"><span class="eyebrow">Contato</span><h2>Vamos conversar sobre sua aplicação?</h2><p>Preencha o formulário e conte brevemente o que você precisa. A WGV Soluções avaliará a aplicação e poderá indicar uma configuração adequada ao seu projeto.</p><div class="contact-info"><a href="https://wa.me/5511947230965?text=Ol%C3%A1!%20Gostaria%20de%20conhecer%20o%20Access%20Checker." target="_blank" rel="noopener"><span>💬</span>(11) 94723-0965</a><a href="mailto:wesleynsv@outlook.com"><span>✉</span>wesleynsv@outlook.com</a></div></div>
+    <form id="contactForm"><div class="form-grid"><div class="field"><label for="name">Nome</label><input id="name" name="name" required placeholder="Seu nome"></div><div class="field"><label for="company">Empresa</label><input id="company" name="company" placeholder="Nome da empresa"></div><div class="field"><label for="phone">WhatsApp</label><input id="phone" name="phone" required placeholder="(11) 99999-9999"></div><div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" placeholder="seu@email.com"></div><div class="field full"><label for="message">O que você gostaria de automatizar?</label><textarea id="message" name="message" required placeholder="Descreva brevemente como funciona hoje o seu processo e o que você gostaria de automatizar."></textarea></div></div><button class="btn btn-primary" type="submit">Enviar solicitação</button><div class="form-note">Ao enviar, o formulário abrirá uma conversa no WhatsApp com as informações preenchidas.</div></form>
+  </div></section>
+</main>
+
+<footer><div class="container"><div class="footer-inner"><div><div class="logo">WGV<span>SOLUÇÕES</span></div><div class="footer-text" style="margin-top:12px">Visão computacional aplicada a soluções inteligentes.</div></div><div class="footer-text">Access Checker · © 2026 WGV Soluções</div></div><div class="privacy">Privacidade e proteção de dados: as funcionalidades e o tratamento de dados do Access Checker devem ser configurados de acordo com a finalidade da aplicação e observar a legislação aplicável, incluindo a LGPD.</div></div></footer>
+
+<a class="whatsapp-float" href="https://wa.me/5511947230965?text=Ol%C3%A1!%20Gostaria%20de%20conhecer%20o%20Access%20Checker." target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp">☏</a>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name=document.getElementById('name').value.trim();
+    const company=document.getElementById('company').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const email=document.getElementById('email').value.trim();
+    const message=document.getElementById('message').value.trim();
+    const text=`Olá! Gostaria de conhecer o Access Checker.\n\nNome: ${name}\nEmpresa: ${company||'Não informado'}\nWhatsApp: ${phone}\nE-mail: ${email||'Não informado'}\n\nAplicação:\n${message}`;
+    window.open(`https://wa.me/5511947230965?text=${encodeURIComponent(text)}`,'_blank');
+  });
+</script>
+</body>
+</html>
